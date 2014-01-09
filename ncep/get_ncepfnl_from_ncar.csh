@@ -1,4 +1,10 @@
 #!/bin/csh
+#
+# get_ncepfnl_from_ncar.csh
+#
+# original script coded by Takashi Unuma, Kyoto Univ.
+# Last modified: 2014/01/09
+#
 
 if ( $#argv == 1 ) then
     echo "INPUT TIME: $1 (UTC)"
@@ -20,18 +26,23 @@ endif
 
 #---+->--directory
 set PREFIX = .
+
 #---+->--remote host
 set RHOST = rda.ucar.edu
-set RUSER = kijima.m.u@gmail.com
-set RPASS = Ock1ujg1-kijimamu
+set RUSER = user
+set RPASS = passwd
+
 #---+->--proxy
-setenv http_proxy proxy.kuins.net:8080
-setenv https_proxy proxy.kuins.net:8080
+setenv http_proxy proxy.com:80
+setenv https_proxy proxy.com:80
+
 #---+->--wget
 set WGET = /usr/bin/wget
 set WOPT = ( -N -nH -np )
+
 #---+->--authkey
 set AUTHKEY = auth.rda_ucar_edu
+
 #---+->--1----+----2----+----3----+----4----+----5----+----6----+----7-<
 if ( -f ${AUTHKEY} ) \rm -f ${AUTHKEY}
 ${WGET} --no-check-certificate -O /dev/null --save-cookies ${AUTHKEY} --post-data="email=${RUSER}&passwd=${RPASS}&action=login" -q https://${RHOST}/cgi-bin/login
@@ -47,7 +58,6 @@ if ( ${T} < ${TT} ) then
 ${WGET} --no-check-certificate --load-cookies ${AUTHKEY} ${WOPT} http://${RHOST}/data/ds083.2/grib1/${Y}/${Y}.${M}/${RFILE1}
 else
 ${WGET} --no-check-certificate --load-cookies ${AUTHKEY} ${WOPT} http://${RHOST}/data/ds083.2/grib1/${Y}/${Y}.${M}/${RFILE2}
-endif
 endif
 @ T += 21600
 end
