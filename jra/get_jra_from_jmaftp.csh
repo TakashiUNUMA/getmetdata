@@ -28,8 +28,8 @@ set RPASS = passwd
 set KUINS = ftp-proxy.kuins.net
 
 #---+->--proxy
-setenv http_proxy proxy.kuins.net:8080
-setenv ftp_proxy ftp-proxy.kuins.net:21
+setenv http_proxy proxy.com:80
+setenv ftp_proxy ftp-proxy.com:80
 
 #---+->--1----+----2----+----3----+----4----+----5----+----6----+----7-<
 @ N = 1
